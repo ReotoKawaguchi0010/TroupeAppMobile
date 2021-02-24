@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:http/http.dart' as http;
+
 
 void main() {
   runApp(MyApp());
@@ -30,18 +34,54 @@ class MyApp extends StatelessWidget {
       ],
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFFFFEBEE),
-          title: Text('劇団沸管理アプリ'),
+          backgroundColor: Color(0xFFC14949),
+          bottom: PreferredSize(
+            preferredSize: Size(0, 35),
+            child: Flex(
+              direction: Axis.horizontal,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.dehaze,
+                    color: Color(0xFFFFFFFF),
+                  ),
+                  onPressed: () {
+                    print('test');
+                  },
+                ),
+                Flexible(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ),
         ),
         body: Center(
-          child: ElevatedButton(
-            child: Text('button'),
-            onPressed: (){
-              print('test');
-            },
+          child: Column(
+            children: <Widget>[
+              Text(
+                'You have pushed the button this many times:',
+              ),
+              Center(
+                  child: ElevatedButton(
+                    child: Text('button'),
+                    onPressed: () async {
+                    var url = 'http://localhost:8000/api/app';
+                    var response = await http.get(url);
+                    print(response.body);
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Color(0xFFC14949)),
+                  ),)
+              ),
+            ],
           )
         )
-      ),
+      )
     );
   }
 }
