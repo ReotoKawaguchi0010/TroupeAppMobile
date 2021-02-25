@@ -13,11 +13,12 @@ const locale = Locale("ja", "JP");
 const localeEn = Locale("en", "EN");
 
 class MyApp extends StatelessWidget {
+  final appTitle = 'Flutter Demo';
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: appTitle,
       locale: locale,
       theme: ThemeData(
         primarySwatch: Colors.red,
@@ -32,10 +33,24 @@ class MyApp extends StatelessWidget {
         locale,
         localeEn,
       ],
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFFC14949),
-          bottom: PreferredSize(
+      home: MyHomePage(title: appTitle,)
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFC14949),
+        bottom: PreferredSize(
             preferredSize: Size(0, 35),
             child: Flex(
               direction: Axis.horizontal,
@@ -51,6 +66,9 @@ class MyApp extends StatelessWidget {
                 ),
                 Flexible(
                   child: TextField(
+                    onChanged: (text) {
+                      print(text);
+                    },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                     ),
@@ -58,9 +76,9 @@ class MyApp extends StatelessWidget {
                 ),
               ],
             )
-          ),
         ),
-        body: Center(
+      ),
+      body: Center(
           child: Column(
             children: <Widget>[
               Text(
@@ -70,28 +88,20 @@ class MyApp extends StatelessWidget {
                   child: ElevatedButton(
                     child: Text('button'),
                     onPressed: () async {
-                    var url = 'http://localhost:8000/api/app';
-                    var response = await http.get(url);
-                    print(response.body);
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Color(0xFFC14949)),
-                  ),)
+                      var url = 'http://localhost:8000/api/app';
+                      var response = await http.get(url);
+                      print(response.body);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Color(0xFFC14949)),
+                    ),)
               ),
             ],
           )
-        )
-      )
+      ),
+      drawer: Drawer(),
     );
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
