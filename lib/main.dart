@@ -42,10 +42,16 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
+  //@override
+  //_MyHomePageState createState() => _MyHomePageState();
 
   @override
+  RootPageState createState() => RootPageState();
+}
+
+
+
+class RootPageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -96,13 +102,24 @@ class MyHomePage extends StatefulWidget {
                       backgroundColor: MaterialStateProperty.all(Color(0xFFC14949)),
                     ),)
               ),
+              DrawerController(child: Text('test'), alignment: DrawerAlignment.end)
             ],
           )
       ),
-      drawer: Drawer(),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
@@ -110,6 +127,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     setState(() {
       _counter++;
+    });
+  }
+
+  void decrement(){
+    setState(() {
+      _counter--;
     });
   }
 
@@ -130,6 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            IconButton(icon: Icon(Icons.backspace), onPressed: decrement)
           ],
         ),
       ),
