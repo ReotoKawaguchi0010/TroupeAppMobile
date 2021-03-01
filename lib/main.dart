@@ -2,7 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:http/http.dart' as http;
+import 'package:futsu/screens/home.dart';
+
 
 
 void main() {
@@ -11,6 +12,10 @@ void main() {
 
 const locale = Locale("ja", "JP");
 const localeEn = Locale("en", "EN");
+
+final routes = [
+
+];
 
 class MyApp extends StatelessWidget {
   final appTitle = 'Flutter Demo';
@@ -38,130 +43,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
 
-  //@override
-  //_MyHomePageState createState() => _MyHomePageState();
+class Routes {
+  final String name;
+  final String route;
+  final WidgetBuilder builder;
 
-  @override
-  RootPageState createState() => RootPageState();
-}
-
-
-
-class RootPageState extends State<MyHomePage> {
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFFC14949),
-        bottom: PreferredSize(
-            preferredSize: Size(0, 35),
-            child: Flex(
-              direction: Axis.horizontal,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.dehaze,
-                    color: Color(0xFFFFFFFF),
-                  ),
-                  onPressed: () {
-                    print('test');
-                  },
-                ),
-                Flexible(
-                  child: TextField(
-                    onChanged: (text) {
-                      print(text);
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-              ],
-            )
-        ),
-      ),
-      body: Center(
-          child: Column(
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
-              Center(
-                  child: ElevatedButton(
-                    child: Text('button'),
-                    onPressed: () async {
-                      var url = 'http://localhost:8000/api/app';
-                      var response = await http.get(url);
-                      print(response.body);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Color(0xFFC14949)),
-                    ),)
-              ),
-              DrawerController(child: Text('test'), alignment: DrawerAlignment.end)
-            ],
-          )
-      ),
-    );
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void decrement(){
-    setState(() {
-      _counter--;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            IconButton(icon: Icon(Icons.backspace), onPressed: decrement)
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
+  const Routes({this.name, this.route, this.builder});
 }
